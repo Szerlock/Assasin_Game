@@ -15,6 +15,8 @@ public class DialogeManager : MonoBehaviour
     private int currentDialogeIndex = 0;
     private string[] currentDialoges;
 
+    private bool isDialogeActive = true;
+
     void Start()
     {
         StartCoroutine(InitializeDialogueManager()); 
@@ -36,15 +38,31 @@ public class DialogeManager : MonoBehaviour
 
     private void ShowDialogue()
     {
-        if(currentDialogeIndex < currentDialoges.Length){
-            dialogueText.text = currentDialoges[currentDialogeIndex];
+        if(dialogueText != null && isDialogeActive){
+            if(currentDialogeIndex < currentDialoges.Length){
+                dialogueText.text = currentDialoges[currentDialogeIndex];
+            }
         }
+    }
+
+    public void PauseDialogue(){
+        isDialogeActive = false;
+
+    }
+
+    public void ResumeDialogue(){
+        isDialogeActive = true;
+        ShowDialogue();
     }
 
     private void OnDialogueButtonClicked()
     {
         currentDialogeIndex++;
         ShowDialogue();
+    }
+
+    public int getDialogueIndex(){
+        return currentDialogeIndex;
     }
 
     

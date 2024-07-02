@@ -1,20 +1,38 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class StartDay1 : MonoBehaviour
 {
+    [SerializeField]
+    private DialogeManager dialogeManager;
     public ScriptLuna luna;
-    // Start is called before the first frame update
+    private GameObject drinkMakingCanvas;
+    [SerializeField] 
+    private int targetDialogueIndex = 1; 
+    [SerializeField]
+    private CanvasManager canvasManager;
+
     void Start()
     {
         luna.showLuna();
-        
+        if (canvasManager != null && canvasManager.newCanvas != null)
+        {
+            canvasManager.newCanvas.SetActive(false);
+        }
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        if(dialogeManager.getDialogueIndex() == targetDialogueIndex){
+            ShowNewCanvas();
+        }
+    }
+
+    private void ShowNewCanvas()
+    {
+        canvasManager.ShowNewCanvas();
     }
 }
