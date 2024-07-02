@@ -1,18 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class NewBehaviourScript : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public Canvas previousCanvas;
+    public GameObject newCanvas;
+
+    public void ShowNewCanvas()
     {
-        
+        previousCanvas.enabled = false;
+        previousCanvas.GetComponent<GraphicRaycaster>().enabled = false;
+
+        newCanvas.SetActive(true);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ShowPreviousCanvas()
     {
-        
+        newCanvas.SetActive(false);
+        previousCanvas.enabled = true;
+        previousCanvas.GetComponent<GraphicRaycaster>().enabled = true;
     }
 }
