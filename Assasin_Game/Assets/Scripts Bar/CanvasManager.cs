@@ -5,34 +5,40 @@ using UnityEngine.UI;
 
 public class CanvasManager : MonoBehaviour
 {
-    public Canvas previousCanvas;
+    public Canvas mainCanvas;
     public GameObject newCanvas;
 
+    private GameObject newCanvasInstance;
     private Canvas newCanvasComponent;
-
-    void Start()
-    {
-        if (newCanvas != null)
-        {
-            newCanvasComponent = newCanvas.GetComponent<Canvas>();
-        }
-    }
 
     public void ShowNewCanvas()
     {
-        previousCanvas.enabled = false;
-        previousCanvas.GetComponent<GraphicRaycaster>().enabled = false;
+        mainCanvas.enabled = false;
+        mainCanvas.GetComponent<GraphicRaycaster>().enabled = false;
 
-        newCanvas.SetActive(true);
+
+        if (newCanvasInstance == null)
+        {
+            newCanvasInstance = Instantiate(newCanvas);
+            newCanvasComponent = newCanvasInstance.GetComponent<Canvas>();
+        }
+
+        newCanvasInstance.SetActive(true);
         newCanvasComponent.enabled = true;
+        newCanvasInstance.GetComponent<GraphicRaycaster>().enabled = true;
+
     }
 
-    public void ShowPreviousCanvas()
+    public void ShowMainCanvas()
     {
-        newCanvas.SetActive(false);
-        newCanvasComponent.enabled = false;
+        if (newCanvasInstance != null)
+        {
+            newCanvasInstance.SetActive(false);
+            newCanvasComponent.enabled = false;
+            newCanvasInstance.GetComponent<GraphicRaycaster>().enabled = false;
+        }
 
-        previousCanvas.enabled = true;
-        previousCanvas.GetComponent<GraphicRaycaster>().enabled = true;
+        mainCanvas.enabled = true;
+        mainCanvas.GetComponent<GraphicRaycaster>().enabled = true;
     }
 }

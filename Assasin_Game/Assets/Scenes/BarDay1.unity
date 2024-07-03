@@ -286,8 +286,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c283f124484d0b74a86ba7eb2f2ea3ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  previousCanvas: {fileID: 979488169}
-  newCanvas: {fileID: 3657248236591694315, guid: 87696359936616345929de0710742a7e, type: 3}
+  mainCanvas: {fileID: 979488169}
+  newCanvas: {fileID: 2397729519037548892, guid: ada0da0344390e14d91a63793298abed, type: 3}
 --- !u!4 &735592266
 Transform:
   m_ObjectHideFlags: 0
