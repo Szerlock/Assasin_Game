@@ -6,6 +6,13 @@ TagManager:
   tags:
   - Target
   - Character
+  - Rum
+  - Vodka
+  - Whiskey
+  - Tequila
+  - Gin
+  - Brandy
+  - Drink
   layers:
   - Default
   - TransparentFX
