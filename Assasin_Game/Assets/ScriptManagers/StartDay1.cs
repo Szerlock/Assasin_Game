@@ -8,16 +8,28 @@ public class StartDay1 : MonoBehaviour
 {
     [SerializeField]
     private DialogeManager dialogeManager;
-    public ScriptLuna luna;
-    private GameObject drinkMakingCanvas;
+    //public ScriptLuna luna;
+    //private GameObject drinkMakingCanvas;
+    private List<CharacterBase> characters = new List<CharacterBase>();
+
     [SerializeField] 
     private int targetDialogueIndex = 1; 
     [SerializeField]
     private CanvasManager canvasManager;
 
+    private int currentCharacterIndex = 0;
+
+
     void Start()
     {
-        luna.showLuna();
+        characters.Add(new ScriptLuna());
+
+        if (characters.Count > 0)
+        {
+            characters[currentCharacterIndex].ShowCharacter();
+            dialogeManager.SetCharacter(characters[currentCharacterIndex]);
+        }
+
         if (canvasManager != null && canvasManager.newCanvas != null)
         {
             canvasManager.newCanvas.SetActive(false);
@@ -28,6 +40,11 @@ public class StartDay1 : MonoBehaviour
     {
         if(dialogeManager.getDialogueIndex() == targetDialogueIndex){
             ShowNewCanvas();
+        }
+        if(canvasManager.GetCurrentIngredientsCount() == 3){
+            if(canvasManager.CheckDrink()){
+                canvasManager.ShowMainCanvas();
+            }
         }
     }
 

@@ -12,6 +12,13 @@ public class ScriptLuna : CharacterBase
         "Yes you i'm talking to you ...",
         "Wow you don't know me?"
     };
+
+    private string[] drinkList ={
+        "Rum",
+        "Vodka",
+        "Brandy"
+    };
+    
     private bool choice1;
 
     public void showLuna(){

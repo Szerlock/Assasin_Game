@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
 public class DialogeManager : MonoBehaviour
@@ -15,6 +16,8 @@ public class DialogeManager : MonoBehaviour
     private int currentDialogeIndex = 0;
     private string[] currentDialoges;
 
+    private CharacterBase currentCharacter;
+
     private bool isDialogeActive = true;
 
     void Start()
@@ -24,14 +27,16 @@ public class DialogeManager : MonoBehaviour
 
     private IEnumerator  InitializeDialogueManager()
     {
-        GameObject character = null;
-        while (character == null)
+        while (currentCharacter == null)
         {
-            character = GameObject.FindGameObjectWithTag("Character");
+            GameObject character = GameObject.FindGameObjectWithTag("Character");
+            if (character != null)
+            {
+                currentCharacter = character.GetComponent<CharacterBase>();
+            }
             yield return null;
         }
-        var characterScript = character.GetComponent<CharacterBase>();
-        currentDialoges = characterScript.GetDialogues();
+        currentDialoges = currentCharacter.GetDialogues();
         ShowDialogue();
         dialogueButton.onClick.AddListener(OnDialogueButtonClicked);
     }
@@ -43,6 +48,14 @@ public class DialogeManager : MonoBehaviour
                 dialogueText.text = currentDialoges[currentDialogeIndex];
             }
         }
+    }
+
+    public void SetCharacter(CharacterBase character)
+    {
+        currentCharacter = character;
+        currentDialoges = currentCharacter.GetDialogues();
+        currentDialogeIndex = 0;
+        ShowDialogue();
     }
 
     public void PauseDialogue(){
@@ -58,14 +71,19 @@ public class DialogeManager : MonoBehaviour
     private void OnDialogueButtonClicked()
     {
         currentDialogeIndex++;
-        ShowDialogue();
+        if (currentDialogeIndex < currentDialoges.Length)
+        {
+            ShowDialogue();
+        }
+        else
+        {
+            isDialogeActive = false;
+            currentCharacter.HideCharacter();
+        }
     }
 
     public int getDialogueIndex(){
         return currentDialogeIndex;
     }
-
-    
-
-    
+ 
 }
