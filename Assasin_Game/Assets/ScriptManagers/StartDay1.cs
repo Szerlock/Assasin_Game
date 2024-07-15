@@ -8,7 +8,9 @@ public class StartDay1 : MonoBehaviour
 {
     [SerializeField]
     private DialogeManager dialogeManager;
-    //public ScriptLuna luna;
+    [SerializeField]
+    private ScriptLuna luna;
+
     //private GameObject drinkMakingCanvas;
     private List<CharacterBase> characters = new List<CharacterBase>();
 
@@ -19,10 +21,12 @@ public class StartDay1 : MonoBehaviour
 
     private int currentCharacterIndex = 0;
 
+    private int currentDay = 1;
 
     void Start()
     {
-        characters.Add(new ScriptLuna());
+        characters.Add(luna);
+        luna.showLuna();
 
         if (characters.Count > 0)
         {
@@ -42,7 +46,7 @@ public class StartDay1 : MonoBehaviour
             ShowNewCanvas();
         }
         if(canvasManager.GetCurrentIngredientsCount() == 3){
-            if(canvasManager.CheckDrink()){
+            if(canvasManager.CheckDrink() == true){
                 canvasManager.ShowMainCanvas();
             }
         }
@@ -51,5 +55,33 @@ public class StartDay1 : MonoBehaviour
     private void ShowNewCanvas()
     {
         canvasManager.ShowNewCanvas();
+    }
+
+    public void nextChar(){
+        if(dialogeManager.getDialogueIndex() == dialogeManager.size() - 1){
+            characters[currentCharacterIndex].HideCharacter();
+            currentCharacterIndex++;
+
+            //More characters to show
+            if (currentCharacterIndex < characters.Count)
+        {
+            // Show the next character
+            characters[currentCharacterIndex].ShowCharacter();
+
+            // Set the new character for the dialogue manager
+            dialogeManager.SetCharacter(characters[currentCharacterIndex]);
+
+            // Update the required ingredients for the new character
+            List<string> characterIngredients = characters[currentCharacterIndex].GetRequiredIngredients(currentDay);
+            canvasManager.SetRequiredIngredients(characterIngredients);
+
+            // Restart the dialogue for the new character
+            dialogeManager.ResetDialogue();
+        }
+
+        }
+        else{
+            Debug.Log("Not yet");
+        }
     }
 }

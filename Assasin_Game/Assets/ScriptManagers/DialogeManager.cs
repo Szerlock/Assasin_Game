@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.TextCore.Text;
@@ -84,6 +85,15 @@ public class DialogeManager : MonoBehaviour
 
     public int getDialogueIndex(){
         return currentDialogeIndex;
+    }
+
+    public void ResetDialogue(){
+        currentDialogeIndex = 0;
+        ShowDialogue();
+    }
+
+    public int size(){
+        return currentDialoges.Count();
     }
  
 }

@@ -12,12 +12,6 @@ public class ScriptLuna : CharacterBase
         "Yes you i'm talking to you ...",
         "Wow you don't know me?"
     };
-
-    private string[] drinkList ={
-        "Rum",
-        "Vodka",
-        "Brandy"
-    };
     
     private bool choice1;
 
@@ -33,5 +27,18 @@ public class ScriptLuna : CharacterBase
     public override string[] GetDialogues()
     {
         return this.dialogesDay1;
+    }
+
+    public override List<string> GetRequiredIngredients(int day)
+    {
+        switch (day)
+        {
+            case 1:
+                return new List<string> { "Rum", "Vodka", "Brandy" };
+            case 2:
+                return new List<string> { "Gin", "Tonic", "Lime" };
+            default:
+                return new List<string> { "Water" };
+        }
     }
 }
